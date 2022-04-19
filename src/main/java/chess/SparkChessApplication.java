@@ -2,7 +2,7 @@ package chess;
 
 import chess.web.WebRouter;
 
-public class WebApplication {
+public class SparkChessApplication {
 
     private static final WebRouter router = new WebRouter();
 
