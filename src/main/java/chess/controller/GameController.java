@@ -53,7 +53,7 @@ public class GameController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NON_AUTHORITATIVE_INFORMATION)
     public void delete(@PathVariable int id
-            ,@RequestBody DeleteGameRequest deleteGameRequest) {
+            , @RequestBody DeleteGameRequest deleteGameRequest) {
         chessService.deleteGame(id, deleteGameRequest);
     }
 }
