@@ -5,8 +5,8 @@ import java.util.List;
 
 public class GamesResponse {
 
-    List<GameEntity> games;
-    GameCountDto gameCount;
+    private final List<GameEntity> games;
+    private final GameCountDto gameCount;
 
     public GamesResponse(GameCountDto gameCount, List<GameEntity> games) {
         this.games = games;
