@@ -4,11 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ExceptionResolver {
 
     private static final String DEFAULT_SERVER_EXCEPTION_MESSAGE = "예상치 못한 문제가 발생하였습니다.";
@@ -17,20 +17,23 @@ public class ExceptionResolver {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionResolver.class);
 
     @ExceptionHandler
-    public ResponseEntity<String> handleException(Exception e) {
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleException(Exception e) {
         logger.error(EMPTY_STRING, e);
-        return new ResponseEntity<>(DEFAULT_SERVER_EXCEPTION_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR);
+        return DEFAULT_SERVER_EXCEPTION_MESSAGE;
     }
 
     @ExceptionHandler
-    public ResponseEntity<String> handleException(EmptyResultDataAccessException e) {
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleException(EmptyResultDataAccessException e) {
         logger.error(EMPTY_STRING, e);
-        return new ResponseEntity<>(NO_DATA_EXCEPTION_MESSAGE, HttpStatus.NOT_FOUND);
+        return NO_DATA_EXCEPTION_MESSAGE;
     }
 
     @ExceptionHandler
-    public ResponseEntity<String> handleException(IllegalArgumentException e) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleException(IllegalArgumentException e) {
         logger.error(EMPTY_STRING, e);
-        return ResponseEntity.badRequest().body(e.getMessage());
+        return e.getMessage();
     }
 }
